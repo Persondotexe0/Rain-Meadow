@@ -418,6 +418,7 @@ namespace RainMeadow
                 AbstractObjStickRepr.map.Remove(item);
             }     
         }
+
         public override void ResolveRequest(GenericResult requestResult)
         {
             base.ResolveRequest(requestResult);
