@@ -418,7 +418,20 @@ namespace RainMeadow
                 AbstractObjStickRepr.map.Remove(item);
             }
         }
-
+      public virtual void ResolveRequest(GenericResult requestResult)
+{
+    base.ResolveRequest(requestResult);
+    if (requestResult is GenericResult.Error)
+    {
+        foreach (var grasp in apo.realizedObject.grabbedBy)
+        {
+            if (grasp.grabber.IsLocal())
+            {
+                grasp.grabber.ReleaseGrasp(grasp.graspUsed); 
+            }
+        }
+    }
+}
         public override string ToString()
         {
             return $"{apo?.type} {base.ToString()}";
