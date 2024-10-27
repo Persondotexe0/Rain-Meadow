@@ -419,7 +419,7 @@ namespace RainMeadow
             }
         
         }
-              public virtual void ResolveRequest(GenericResult requestResult)
+        public override void ResolveRequest(GenericResult requestResult)
         {
             base.ResolveRequest(requestResult);
             if (requestResult is GenericResult.Error)
@@ -428,7 +428,7 @@ namespace RainMeadow
                 {
                     if (grasp.grabber.IsLocal())
                     {
-                        grasp.grabber.ReleaseGrasp(grasp.graspUsed); 
+                        grasp.grabber.ReleaseGrasp(grasp.graspUsed);  
                     }
                 }
             }
