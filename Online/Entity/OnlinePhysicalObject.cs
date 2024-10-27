@@ -423,15 +423,15 @@ namespace RainMeadow
         {
             base.ResolveRequest(requestResult);
             if (requestResult is GenericResult.Error)
-        {
-              foreach (var grasp in apo.realizedObject.grabbedBy)
-              {
-                 if (grasp.grabber.IsLocal())
-                 {
-                     grasp.grabber.ReleaseGrasp(grasp.graspUsed); 
-                 }
-              }
-           }
+            {
+                foreach (var grasp in apo.realizedObject.grabbedBy)
+                {
+                    if (grasp.grabber.IsLocal())
+                    {
+                        grasp.grabber.ReleaseGrasp(grasp.graspUsed); 
+                    }
+                }
+            }
         }
         public override string ToString()
         {
