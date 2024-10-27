@@ -353,11 +353,6 @@ namespace RainMeadow
                     }
                     if (!onlineGrabbed.isMine && onlineGrabbed.isTransferable && !onlineGrabbed.isPending) // been leased to someone else
                     {
-                        if (grasp.grabbed is not Creature) // Non-Creetchers cannot be grabbed by multiple creatures
-                        {
-                            self.ReleaseGrasp(grasp.graspUsed);
-                            continue;
-                        }
 
                         var grabbersOtherThanMe = grasp.grabbed.grabbedBy.Select(x => x.grabber).Where(x => x != self);
                         foreach (var grabbers in grabbersOtherThanMe)
