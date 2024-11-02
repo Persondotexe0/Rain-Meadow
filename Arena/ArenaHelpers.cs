@@ -31,8 +31,17 @@ namespace RainMeadow
             }
             arena.allPlayersReadyLockLobby = false;
             arena.clientsAreReadiedUp = 0;
+            foreach (var player in OnlineManager.players)
+            {
+                arena.playersReadiedUp[player.id.name] = false;
+            }
+            
             arena.isInGame = false;
             arena.returnToLobby = false;
+            arena.playerEnteredGame = 0;
+            //arena.allPlayersAreNowInGame = false;
+            arena.countdownInitiatedHoldFire = true;
+            arena.setupTime = 300;
             lobby.manager.rainWorld.options.DeleteArenaSitting();
 
         }
@@ -58,11 +67,10 @@ namespace RainMeadow
             {
 
                 var currentPlayer = ArenaHelpers.FindOnlinePlayerByLobbyId(arena.arenaSittingOnlineOrder[i]);
-
                 ArenaSitting.ArenaPlayer newPlayer = new ArenaSitting.ArenaPlayer(i)
                 {
                     playerNumber = i,
-                    playerClass = ((OnlineManager.lobby.clientSettings[currentPlayer].GetData<ArenaClientSettings>()).playingAs), // Set the playerClass to the OnlinePlayer
+                    playerClass = ((OnlineManager.lobby.clientSettings[currentPlayer].GetData<ArenaClientSettings>()).playingAs), // Set the playerClass to the OnlinePlayer. TODO: Try and find a way to go through avatarSettings for this
                     hasEnteredGameArea = true
                 };
 

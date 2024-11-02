@@ -2,7 +2,6 @@ using HUD;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
-using RainMeadow.Story.OnlineUIComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -139,6 +138,7 @@ namespace RainMeadow
                         self.gameOverMode = false;
                     }
                 }
+                self.restartNotAllowed = (ChatHud.chatButtonActive) ? 1 : 0; // block GoToDeathScreen if we're typing
             }
         }
 
@@ -484,7 +484,7 @@ namespace RainMeadow
         private void RainWorldGame_GoToDeathScreen(On.RainWorldGame.orig_GoToDeathScreen orig, RainWorldGame self)
         {
             if (isStoryMode(out var gameMode))
-            {
+            {                
                 if (OnlineManager.lobby.isOwner)
                 {
                     RPCs.MovePlayersToDeathScreen();

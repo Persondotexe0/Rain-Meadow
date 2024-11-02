@@ -157,14 +157,7 @@ namespace RainMeadow
                     SteamMatchmaking.SetLobbyData(lobbyID, CLIENT_KEY, CLIENT_VAL);
                     SteamMatchmaking.SetLobbyData(lobbyID, NAME_KEY, SteamFriends.GetPersonaName() + "'s Lobby");
                     SteamMatchmaking.SetLobbyData(lobbyID, MODE_KEY, creatingWithMode);
-                    if (lobbyPassword != null)
-                    {
-                        SteamMatchmaking.SetLobbyData(lobbyID, PASSWORD_KEY, "true");
-                    }
-                    else
-                    {
-                        SteamMatchmaking.SetLobbyData(lobbyID, PASSWORD_KEY, "false");
-                    }
+                    SteamMatchmaking.SetLobbyData(lobbyID, PASSWORD_KEY, lobbyPassword != null ? "true" : "false");
                     SteamMatchmaking.SetLobbyMemberLimit(lobbyID, MAX_LOBBY);
                     OnlineManager.lobby = new Lobby(new OnlineGameMode.OnlineGameModeType(creatingWithMode), OnlineManager.mePlayer, lobbyPassword);
                     SteamFriends.SetRichPresence("connect", lobbyID.ToString());
@@ -288,18 +281,7 @@ namespace RainMeadow
 
             if (OnlineManager.players.FirstOrDefault(op => (op.id as SteamPlayerId).steamID == p) is OnlinePlayer player)
             {
-                RainMeadow.Debug($"Handling player disconnect:{player}");
-                player.hasLeft = true;
-                OnlineManager.lobby?.OnPlayerDisconnect(player);
-                while (player.HasUnacknoledgedEvents())
-                {
-                    player.AbortUnacknoledgedEvents();
-                    OnlineManager.lobby?.OnPlayerDisconnect(player);
-                }
-                RainMeadow.Debug($"Actually removing player:{player}");
-                OnlineManager.players.Remove(player);
-
-                ChatLogManager.LogMessage($"{SteamFriends.GetFriendPersonaName(p)} left the game.");
+                HandleDisconnect(player);
             }
         }
 
